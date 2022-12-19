@@ -1,8 +1,8 @@
-WHY NOT A GIF HERE? TO SET THE MODE.
+I am not in the mood to set the mode with GIFs. Thank you very much.
 
-# Island name
+# The Good Morrow
 
-Some text about your lovely island
+It is very poetic indeed.
 
 # Hotel name
 
