@@ -11,7 +11,7 @@ use benhall14\phpCalendar\Calendar as Calendar;
 
 
 $rooms = [];
-//Index = room_number
+//Index equals room_number
 $rooms[1] = [
                     "quality" => "basic",
                     "bookings" => [],
@@ -39,25 +39,26 @@ $db = connect("./hotels.db");
 //ENV SETUP
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-
+///////////////////////////////
+//PREPARED STATEMENTS PLEASE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!/////////
+///////////////////////////////
 //Get bookings from DB
 $stmt = $db->query("SELECT * FROM bookings");
 $bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
+///////////////////////////////////////////
+////////////Calendar should show until Departuredate-1
+////////////////////////////////////////////
 //Add each booking to corresponding room calendar
 foreach ($bookings as $booking) {
                     $rooms[$booking["room_number"]]["calendar"]->addEvent(
-                                        $booking["start_date"],   # start date in either Y-m-d or Y-m-d
-                                        $booking["end_date"],   # end date in either Y-m-d or Y-m-d
+                                        $booking["arrival_date"],   # start date in either Y-m-d or Y-m-d
+                                        $booking["departure_date"],   # end date in either Y-m-d or Y-m-d
                                         '',  # event name text
                                         true,           # should the date be masked - boolean default true
                     );
 }
 //echo $_ENV["USER_NAME"];
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -80,12 +81,29 @@ foreach ($bookings as $booking) {
                     </header>
                     <?php foreach ($rooms as $room) {
                     ?> <h2><?= $room["quality"] ?></h2> <?php
-                                                            echo $room["calendar"]->draw(date('Y-01-01'));
+                                                            echo $room["calendar"]->draw(date('2023-01-01'));
                                         } ?>
 
 
 
 
+
+
+                    <form method="post" action="./booking.php">
+                                        <label for="transfer_code">Transfer Code</label>
+                                        <input type="text" name="transfer_code">
+                                        <label for="arrival">Arrival</label>
+                                        <input type="date" name="arrival" min="2023-01-01" max="2023-01-31">
+                                        <label for="departure">Departure</label>
+                                        <input type="date" name="departure" min="2023-01-01" max="2023-01-31">
+                                        <select>
+                                                            <option value="basic">Basic</option>
+                                                            <option value="average">Average</option>
+                                                            <option value="high">High</option>
+                                        </select>
+                                        <button type="submit">Book!</button>
+
+                    </form>
                     <script src="script.js"></script>
 </body>
 
