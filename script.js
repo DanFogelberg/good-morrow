@@ -1,3 +1,3 @@
-const dates = document.querySelectorAll('.cal-day');
+// const dates = document.querySelectorAll('.cal-day');
 
-dates[2].classList.add('date-occupied');
+// dates[2].classList.add('date-occupied');
