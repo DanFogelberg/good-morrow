@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
 Here's something to start your career as a hotel manager.
 
@@ -50,4 +52,21 @@ function isValidUuid(string $uuid): bool
                                         return false;
                     }
                     return true;
+}
+
+
+
+function validateDate($date, $format = 'Y-m-d'): bool
+{
+                    $d = DateTime::createFromFormat($format, $date);
+                    return $d && $d->format($format) === $date;
+}
+
+function dateWithin($date, $startDate, $endDate): bool
+{
+                    if (strtotime($date) >= strtotime($startDate) && strtotime($date) <= strtotime($endDate)) {
+                                        return true;
+                    } else {
+                                        return false;
+                    }
 }

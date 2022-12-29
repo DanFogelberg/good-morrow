@@ -6,7 +6,7 @@ require "hotelFunctions.php";
 require "hotelVariables.php"; //Room prices
 require "vendor/autoload.php";
 
-
+echo $_POST["arrival"];
 
 
 use GuzzleHttp\Client;
