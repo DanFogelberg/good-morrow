@@ -1,55 +1,71 @@
 <?php
-header("Content-Type:application/json");
+
 require "../hotelVariables.php";
 require "../hotelFunctions.php";
+require "../vendor/autoload.php";
 
-/*
-                    arrival
-                    departure
-                    roomType
-                    transferCode
-*/
+
+
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+
+header("Content-Type:application/json");
+$response = [];
+$db = connect("./hotels.db");
+
 //Check Post
-if (!isset($_POST["arrival"], $_POST["departure"], $_POST["roomType"], $_POST["transferCode"])) {
+if (!isset($_POST["arrival"], $_POST["departure"], $_POST["room"], $_POST["transferCode"])) {
                     $response = [
                                         "usage" => "Make a POST request",
                                         "form_params" => [
                                                             "arrival" => "string: YYYY-MM-DD",
                                                             "departure" => "string: YYYY-MM-DD",
-                                                            "roomType" => "string: basic/average/high",
+                                                            "room" => "string: basic/average/high",
                                                             "transferCode" => "string: uuid"
                                         ],
                                         "response" => "Array with message or error"
                     ];
-} else {
-                    //Sanitize
-                    $arrival = htmlspecialchars($_POST["arrival"], ENT_QUOTES);
-                    $departure = htmlspecialchars($_POST["departure"], ENT_QUOTES);
-                    $roomType = htmlspecialchars($_POST["roomType"], ENT_QUOTES);
-                    $transferCode = htmlspecialchars($_POST["transferCode"], ENT_QUOTES);
+                    echo json_encode($response);
+                    die();
+}
 
-                    if (!validateDate($arrival) || !validateDate($departure)) {
-                                        $response = ["Error" => "Please enter date in format: 'YYYY-MM-DD'"];
-                    } else if (strtotime($departure) <= strtotime($arrival)) {
-                                        $response = ["Error" => "Departure date is before arrival."];
-                    } else if (!dateWithin($arrival, "2023-01-01", "2023-01-31") || !dateWithin($departure, "2023-01-01", "2023-01-31")) {
-                                        $response = ["Error" => "Only bookings in January allowed!"];
-                    } else if (!array_key_exists($roomType, $roomTypes)) {
-                                        $response = ["Error" => "Invalid room type"];
-                    } else if (!isValidUuid($transferCode)) {
-                                        $response = ["Error" => "Invalid transferCode format"];
-                    } else {
-                                        connect("../hotel.db");
-                                        $response = ["Message" => "Det funkar!"];
-                    }
+//Sanitize
+$arrival = htmlspecialchars($_POST["arrival"], ENT_QUOTES);
+$departure = htmlspecialchars($_POST["departure"], ENT_QUOTES);
+$room = htmlspecialchars($_POST["room"], ENT_QUOTES);
+$transferCode = htmlspecialchars($_POST["transferCode"], ENT_QUOTES);
 
+//Checks for potenial errors. Rooms is array of room types from hotelVariables
+$result = checkTransferCode($transferCode, $rooms[$room]["cost"]);
+if ($result !== true) $response["error"] = $result;
+$result = checkBooking($arrival, $departure, $room, $rooms, $db);
+if ($result !== true) $response["error"] = $result;
+if (isset($response["error"])) {
+                    echo json_encode($response);
+                    die();
+}
 
+//Insert booking into database
+$result = insertBooking($arrival, $departure, $room, $rooms, $db);
 
-
-                    //Checks still needed. If date is within parameters and is available;
-
+//Finally transfer money. This is done last as an error with the database would be easier to fix than an error with the bank.
+$result = transferMoney($transferCode);
+if ($result !== true) $response["error"] = $result;
+if (isset($response["error"])) {
+                    echo json_encode($response);
+                    die();
 }
 
 
-
-echo json_encode($response);
+$bookingResponse = [
+                    "island" => "Point Nemo",
+                    "hotel" => "The Good Morrow",
+                    "arrival_date" => $arrival,
+                    "departure_date" => $departure,
+                    "total_cost" => "Placeholder TOTAL COST", //PLACEHOLDER NUMBER HERE. PLEASE FIX!
+                    "stars" => $stars,
+                    "features" => "None",
+                    "additional_info" => "Very good. Enjoy your stay. But not too much, you might never leave."
+];
+echo json_encode($bookingResponse);

@@ -100,9 +100,9 @@ foreach ($bookings as $booking) {
                                         <label for="departure">Departure</label>
                                         <input type="date" name="departure" min="2023-01-01" max="2023-01-31">
                                         <select name="room">
-                                                            <option value="1">Basic</option>
-                                                            <option value="2">Average</option>
-                                                            <option value="3">High</option>
+                                                            <option value="basic">Basic</option>
+                                                            <option value="average">Average</option>
+                                                            <option value="high">High</option>
                                         </select>
                                         <button type="submit">Book!</button>
 
