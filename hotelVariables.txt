@@ -1,0 +1,1 @@
+{"basic":{"cost":4,"roomNumber":1},"average":{"cost":6,"roomNumber":2},"high":{"cost":8,"roomNumber":3}}
