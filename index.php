@@ -5,8 +5,6 @@ require "hotelFunctions.php";
 require "hotelVariables.php";
 require "vendor/autoload.php";
 
-
-use Dotenv\Dotenv;
 use benhall14\phpCalendar\Calendar as Calendar;
 //Room stats from hotelVariables.php
 $roomTypes = $rooms;
@@ -37,9 +35,7 @@ foreach ($rooms as $room) {
 
 //CONNECT DB
 $db = connect("./hotels.db");
-//ENV SETUP
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+
 
 //Get bookings from DB
 $statement = $db->prepare("SELECT * FROM bookings");
