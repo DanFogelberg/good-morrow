@@ -31,8 +31,10 @@ $room = htmlspecialchars($_POST["room"], ENT_QUOTES);
 $arrival = htmlspecialchars($_POST["arrival"], ENT_QUOTES);
 $departure = htmlspecialchars($_POST["departure"], ENT_QUOTES);
 
+$totalCost = totalCost($arrival, $departure, $rooms[$room]["cost"]);
+echo $totalCost;
 //Checks for any possible errors or problems with booking. Rooms is array of room types from hotelVariables
-$result = checkTransferCode($transferCode, $rooms[$room]["cost"]);
+$result = checkTransferCode($transferCode, $totalCost);
 if ($result !== true) $response["error"] = $result;
 $result = checkBooking($arrival, $departure, $room, $rooms, $db);
 if ($result !== true) $response["error"] = $result;
@@ -58,9 +60,6 @@ if (isset($response["error"])) {
                     die();
 }
 
-
-
-
 //RETURN CONFIRMATION
 
 
@@ -69,7 +68,7 @@ $bookingResponse = [
                     "hotel" => "The Good Morrow",
                     "arrival_date" => $arrival,
                     "departure_date" => $departure,
-                    "total_cost" => "Placeholder TOTAL COST", //PLACEHOLDER NUMBER HERE. PLEASE FIX!
+                    "total_cost" => $totalCost,
                     "stars" => $stars,
                     "features" => "None",
                     "additional_info" => "Very good. Enjoy your stay. But not too much, you might never leave."

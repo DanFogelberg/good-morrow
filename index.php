@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 require "hotelFunctions.php";
-require 'vendor/autoload.php';
+require "hotelVariables.php";
+require "vendor/autoload.php";
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
+
 use Dotenv\Dotenv;
 use benhall14\phpCalendar\Calendar as Calendar;
-
+//Room stats from hotelVariables.php
+$roomTypes = $rooms;
 
 $rooms = [];
 //Index equals room_number
@@ -83,9 +84,9 @@ foreach ($bookings as $booking) {
 
                     </header>
                     <?php foreach ($rooms as $room) {
-                    ?> <h2><?= $room["quality"] ?></h2> <?php
-                                                            echo $room["calendar"]->draw(date('2023-01-01'));
-                                        } ?>
+                    ?> <h2><?= $room["quality"] ?> Price: <?= $roomTypes[$room["quality"]]["cost"] ?></h2> <?php
+                                                                                                                        echo $room["calendar"]->draw(date('2023-01-01'));
+                                                                                                    } ?>
 
 
 
@@ -104,7 +105,12 @@ foreach ($bookings as $booking) {
                                                             <option value="average">Average</option>
                                                             <option value="high">High</option>
                                         </select>
+                                        <input type="checkbox" id="poetryWaking" name="poetryWaking" value="poetryWaking">
+                                        <label for="poetryWaking"> Waking by poetry reading. Price: <?= $extras["poetryWaking"] ?> </label><br>
+
+
                                         <button type="submit">Book!</button>
+
 
                     </form>
                     <script src="script.js"></script>

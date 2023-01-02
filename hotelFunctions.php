@@ -4,17 +4,6 @@ declare(strict_types=1);
 
 use GuzzleHttp\Client;
 
-/*
-Here's something to start your career as a hotel manager.
-
-One function to connect to the database you want (it will return a PDO object which you then can use.)
-    For instance: $db = connect('hotel.db');
-                  $db->prepare("SELECT * FROM bookings");
-
-one function to create a guid,
-and one function to control if a guid is valid.
-*/
-
 function connect(string $dbName): object
 {
 
@@ -74,7 +63,7 @@ function dateWithin($date, $startDate, $endDate): bool
 }
 
 
-
+//NEED TO CHECK IF DATE FOR BOOKING HAS PASSED!
 //Returns true if successful, otherwise error as string
 function checkBooking($arrival, $departure, $room, $rooms, $db): string | bool
 {
@@ -83,6 +72,8 @@ function checkBooking($arrival, $departure, $room, $rooms, $db): string | bool
 
                     if (!validateDate($arrival) || !validateDate($departure)) {
                                         return "Please enter date in format: 'YYYY-MM-DD'";
+                    } else if (date("Y-m-d") > $arrival) {
+                                        return "Error. Day of arrival has already passed.";
                     } else if (strtotime($departure) <= strtotime($arrival)) {
                                         return "Departure date is before arrival.";
                     } else if (!dateWithin($arrival, "2023-01-01", "2023-01-31") || !dateWithin($departure, "2023-01-01", "2023-01-31")) {
@@ -129,6 +120,10 @@ function checkTransferCode($transferCode, $totalCost): string | bool
                                                             return "Error occured!" . $e;
                                         }
                                         if (array_key_exists("error", $response)) {
+                                                            if ($response["error"] == "Not a valid GUID") {
+                                                                                //The banks error message for a transferCode not being valid for enough can be misleading.
+                                                                                return "An error has occured! $response[error]. This could be due to your Transfercode not being vaild for enough credit.";
+                                                            }
                                                             return "An error has occured! $response[error]";
                                         }
                                         if (!array_key_exists("amount", $response) || $response["amount"] < $totalCost) {
@@ -177,4 +172,13 @@ function transferMoney($transferCode): string | bool
                                         //Perhaps the best solution here would be to automatically remove the booking from the hotel?
                                         return "Booking successful but there was an error with the money transfer. Please contact the hotel to resolve this manually. Error:" . $e;
                     }
+}
+
+
+function totalCost($arrival, $departure, $roomCost, $extras = false)
+{
+                    $secondsBooked = strtotime($departure) - strtotime($arrival);
+                    $daysBooked = $secondsBooked / (60 * 60 * 24);
+                    $totalCost = $roomCost * $daysBooked;
+                    return $totalCost;
 }
