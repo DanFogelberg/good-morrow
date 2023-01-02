@@ -175,10 +175,14 @@ function transferMoney($transferCode): string | bool
 }
 
 
-function totalCost($arrival, $departure, $roomCost, $extras = false)
+function totalCost($arrival, $departure, $roomCost, $extras = [])
 {
                     $secondsBooked = strtotime($departure) - strtotime($arrival);
                     $daysBooked = $secondsBooked / (60 * 60 * 24);
                     $totalCost = $roomCost * $daysBooked;
+
+                    foreach ($extras as $extra) {
+                                        $totalCost += $extra["cost"] * $daysBooked;
+                    }
                     return $totalCost;
 }

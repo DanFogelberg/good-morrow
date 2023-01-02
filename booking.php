@@ -9,6 +9,8 @@ require "vendor/autoload.php";
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 
+var_dump($_POST);
+
 header('Content-Type: application/json');
 $response = [];
 
@@ -24,15 +26,19 @@ if (empty($_POST["transfer_code"]) || empty($_POST["room"])) {
                     echo json_encode($response);
                     die();
 }
-
 //Sanitize
 $transferCode = htmlspecialchars($_POST["transfer_code"], ENT_QUOTES);
 $room = htmlspecialchars($_POST["room"], ENT_QUOTES);
 $arrival = htmlspecialchars($_POST["arrival"], ENT_QUOTES);
 $departure = htmlspecialchars($_POST["departure"], ENT_QUOTES);
 
-$totalCost = totalCost($arrival, $departure, $rooms[$room]["cost"]);
-echo $totalCost;
+$bookedExtras = [];
+foreach ($extras as $key => $extra) {
+                    if (isset($_POST[$key]) === true) $bookedExtras[] = $extra;
+}
+
+$totalCost = totalCost($arrival, $departure, $rooms[$room]["cost"], $bookedExtras);
+
 //Checks for any possible errors or problems with booking. Rooms is array of room types from hotelVariables
 $result = checkTransferCode($transferCode, $totalCost);
 if ($result !== true) $response["error"] = $result;
