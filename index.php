@@ -79,7 +79,8 @@ foreach ($bookings as $booking) {
 
 <body>
                     <header>
-                                        <h1>The Good Morrow Hotel</h1>
+                                        <h1>Welcome to The Good Morrow Hotel</h1>
+                                        <h2> Right now you get 20% off if you book a whole week or more!</h2>
 
 
                     </header>

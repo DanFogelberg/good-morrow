@@ -177,12 +177,32 @@ function transferMoney($transferCode): string | bool
 
 function totalCost($arrival, $departure, $roomCost, $extras = [])
 {
+
                     $secondsBooked = strtotime($departure) - strtotime($arrival);
                     $daysBooked = $secondsBooked / (60 * 60 * 24);
                     $totalCost = $roomCost * $daysBooked;
 
                     foreach ($extras as $extra) {
                                         $totalCost += $extra["cost"] * $daysBooked;
+                    }
+                    $totalCost = checkDiscounts($arrival, $departure, $roomCost, $extras, $daysBooked, $totalCost);
+                    return $totalCost;
+}
+
+
+//Will check for all discounts. Has extra parameters that will probably be used for future discounts
+function checkDiscounts($arrival, $departure, $roomCost, $extras, $daysBooked, $totalCost): float
+{
+                    $totalCost = fullWeekDiscount($daysBooked, $totalCost);
+                    return $totalCost;
+}
+
+
+function fullWeekDiscount($daysBooked, $totalCost): float
+{
+                    global $discounts; //Discounts from hotelVariables.php
+                    if ($daysBooked >= 7 & $discounts["fullWeek"] === true) {
+                                        $totalCost = $totalCost * 0.8;
                     }
                     return $totalCost;
 }
