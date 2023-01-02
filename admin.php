@@ -12,7 +12,9 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+session_start();
 $loggedIn = false;
+if (isset($_SESSION["loggedIn"]) === true) $loggedIn = true;
 
 if (isset($_POST["user"], $_POST["apiKey"])) {
                     $user = htmlspecialchars($_POST["user"], ENT_QUOTES);
@@ -22,6 +24,12 @@ if (isset($_POST["user"], $_POST["apiKey"])) {
                                         echo "Wrong username or password";
                     } else {
                                         $loggedIn = true;
+
+                                        $db = connect("hotels.db");
+                                        //Get bookings from DB
+                                        $statement = $db->prepare("SELECT * FROM bookings");
+                                        $statement->execute();
+                                        $bookings = $statement->fetchAll(PDO::FETCH_ASSOC);
                     }
 }
 
@@ -48,8 +56,16 @@ if (isset($_POST["user"], $_POST["apiKey"])) {
                                         </form>
                     <?php else : ?>
 
+                                        <form method="post" action="">
+                                                            <h3>Inloggad!</h3>
+                                                            <?php foreach ($bookings as $booking) : ?>
+                                                                                <label for="booking">Booking From: <?= $booking["arrival_date"] ?> Until: <?= $booking["departure_date"] ?> In room: <?= $booking["room_number"] ?></label><input type="checkbox" name="<?= $booking['id'] ?>">
+                                                                                <br>
 
-                                        Inloggad!
+
+                                                            <?php endforeach ?>
+                                                            <button type="submit">Delete selected?</button>
+                                        </form>
 
                     <?php endif ?>
 
