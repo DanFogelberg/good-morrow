@@ -64,8 +64,17 @@ if (isset($response["error"])) {
 }
 
 //RETURN CONFIRMATION
-
-
+if (count($bookedExtras) < 1) {
+                    $features = "none";
+} else {
+                    $features = "";
+                    $i = 0;
+                    foreach ($bookedExtras as $extra) {
+                                        if ($i > 0) $features .= ", ";
+                                        $features .= $extra["name"];
+                                        $i++;
+                    }
+}
 $bookingResponse = [
                     "island" => "Point Nemo",
                     "hotel" => "The Good Morrow",
@@ -73,7 +82,7 @@ $bookingResponse = [
                     "departure_date" => $departure,
                     "total_cost" => $totalCost,
                     "stars" => $stars,
-                    "features" => "None",
+                    "features" => $features,
                     "additional_info" => "Very good. Enjoy your stay. But not too much, you might never leave."
 ];
 echo json_encode($bookingResponse);

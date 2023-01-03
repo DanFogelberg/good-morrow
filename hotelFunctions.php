@@ -140,8 +140,7 @@ function insertBooking($arrival, $departure, $room, $rooms, $db): bool
 {
 
 
-                    $statement = $db->prepare('INSERT INTO bookings(room_number, arrival_date, departure_date)
-VALUES(:room_number, :arrival_date, :departure_date)');
+                    $statement = $db->prepare('INSERT INTO bookings(room_number, arrival_date, departure_date) VALUES(:room_number, :arrival_date, :departure_date)');
 
                     $statement->bindParam(':room_number', $rooms[$room]["roomNumber"], PDO::PARAM_INT);
                     $statement->bindParam(':arrival_date', $arrival, PDO::PARAM_STR);

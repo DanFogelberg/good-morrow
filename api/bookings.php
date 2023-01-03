@@ -45,8 +45,6 @@ if (isset($_POST["extras"]) && is_array($_POST["extras"])) {
                     }
 }
 $totalCost = totalCost($arrival, $departure, $rooms[$room]["cost"], $bookedExtras);
-echo $totalCost;
-die();
 //Checks for potenial errors. Rooms is array of room types from hotelVariables
 $result = checkTransferCode($transferCode, $rooms[$room]["cost"]);
 if ($result !== true) $response["error"] = $result;
@@ -68,10 +66,15 @@ if (isset($response["error"])) {
                     die();
 }
 
-if (count($bookedExtras) > 0) {
+if (count($bookedExtras) < 1) {
+                    $features = "none";
+} else {
                     $features = "";
+                    $i = 0;
                     foreach ($bookedExtras as $extra) {
+                                        if ($i > 0) $features .= ", ";
                                         $features .= $extra["name"];
+                                        $i++;
                     }
 }
 $bookingResponse = [
@@ -81,7 +84,7 @@ $bookingResponse = [
                     "departure_date" => $departure,
                     "total_cost" => $totalCost,
                     "stars" => $stars,
-                    "features" => $totalCost,
+                    "features" => $features,
                     "additional_info" => "Very good. Enjoy your stay. But not too much, you might never leave."
 ];
 echo json_encode($bookingResponse);
