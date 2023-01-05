@@ -102,11 +102,13 @@ foreach ($bookings as $booking) {
                                         <div class="booking-row">
                                                             <label for="transfer_code">Transfer Code:</label>
                                                             <input type="text" name="transfer_code">
+                                        </div>
+                                        <div class="booking-row">
                                                             <label for="room">Room Standard:</label>
                                                             <select name="room">
-                                                                                <option value="basic">Basic (cost:<?= $roomTypes["basic"]["cost"] ?>)</option>
-                                                                                <option value="average">Average (cost:<?= $roomTypes["average"]["cost"] ?>)</option>
-                                                                                <option value="high">High (cost:<?= $roomTypes["high"]["cost"] ?>)</option>
+                                                                                <option value="basic">Basic (Cost:<?= $roomTypes["basic"]["cost"] ?>)</option>
+                                                                                <option value="average">Average (Cost:<?= $roomTypes["average"]["cost"] ?>)</option>
+                                                                                <option value="high">High (Cost:<?= $roomTypes["high"]["cost"] ?>)</option>
                                                             </select>
                                         </div>
                                         <div class="booking-row">
@@ -116,8 +118,10 @@ foreach ($bookings as $booking) {
                                                             <input type="date" name="departure" min="2023-01-01" max="2023-01-31">
                                         </div>
                                         <div class="booking-row">
+                                                            Extras:
                                                             <input type="checkbox" id="poetryWaking" name="poetryWaking" value="poetryWaking">
-                                                            <label for="poetryWaking"> Waking by poetry reading. Price: <?= $extras["poetryWaking"]["cost"] ?> </label><br>
+                                                            <label for="poetryWaking"> Waking by poetry reading (Cost: <?= $extras["poetryWaking"]["cost"] ?>) </label><br>
+
 
 
                                                             <button type="submit">Book!</button>
