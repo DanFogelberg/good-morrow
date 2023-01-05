@@ -120,7 +120,7 @@ foreach ($bookings as $booking) {
                                         </div>
                                         <div class="booking-row">
                                                             Extras:
-                                                            <input type="checkbox" id="poetryWaking" name="poetryWaking" value="poetryWaking">
+                                                            <input type="checkbox" class="extra" name="poetryWaking" value=<?= $extras["poetryWaking"]["cost"] ?>>
                                                             <label for="poetryWaking"> Waking by poetry reading (Cost: <?= $extras["poetryWaking"]["cost"] ?>) </label><br>
 
 

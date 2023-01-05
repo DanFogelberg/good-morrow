@@ -9,7 +9,12 @@ const calculatePrice = () => {
     if (bookingDays < 1) {
       console.log('Booking less than 1 day.');
     } else {
-      const totalCost = bookingDays * roomTypes.basic.cost;
+      var totalCost = bookingDays * roomTypes[roomSelect.value].cost;
+      extras.forEach((extra) => {
+        if (extra.checked === true) {
+          totalCost += parseFloat(extra.value) * bookingDays;
+        }
+      });
       console.log(totalCost);
     }
   }
@@ -17,15 +22,13 @@ const calculatePrice = () => {
 
 //roomTypes = $roomTypes from php as object
 roomSelect = document.querySelector('select');
-
-roomSelect.addEventListener('change', function () {
-  console.log(roomSelect.value);
-});
-
 arrivalSelect = document.querySelector('#arrival');
 departureSelect = document.querySelector('#departure');
+extras = document.querySelectorAll('.extra');
 
-console.log(arrivalSelect.value);
-
+roomSelect.addEventListener('change', calculatePrice);
 arrivalSelect.addEventListener('change', calculatePrice);
 departureSelect.addEventListener('change', calculatePrice);
+extras.forEach((extra) => {
+  extra.addEventListener('change', calculatePrice);
+});
