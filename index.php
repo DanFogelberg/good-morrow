@@ -9,6 +9,7 @@ use benhall14\phpCalendar\Calendar as Calendar;
 //Room stats from hotelVariables.php
 $roomTypes = $rooms;
 
+
 $rooms = [];
 //Index equals room_number
 $rooms[1] = [
@@ -70,43 +71,57 @@ foreach ($bookings as $booking) {
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                     <title>Document</title>
 
-                    <link rel="stylesheet" href="style.css">
+                    <link rel="stylesheet" href="./css/header.css">
+                    <link rel="stylesheet" href="./css/style.css">
+                    <link rel="stylesheet" href="./css/booking.css">
 </head>
 
 <body>
                     <header>
-                                        <h1>Welcome to The Good Morrow Hotel</h1>
-                                        <h2> Right now you get 20% off if you book a whole week or more!</h2>
+                                        <h1>The Good Morrow Hotel</h1>
+                                        <nav>
+                                                            <a href="<?= $adress ?>/admin.php ">Admin</a>
+                                                            <a href="<?= $adress ?>/api/bookings.php ">API</a>
+                                        </nav>
+
 
 
                     </header>
+                    <h2 class="offer"> Right now you get 20% off if you book a whole week or more!</h2>
                     <?php foreach ($rooms as $room) {
-                    ?> <h2><?= $room["quality"] ?> Price: <?= $roomTypes[$room["quality"]]["cost"] ?></h2> <?php
-                                                                                                                        echo $room["calendar"]->draw(date('2023-01-01'));
-                                                                                                    } ?>
+                    ?> <h2 class="room-title"><?= $room["quality"] ?> Price: <?= $roomTypes[$room["quality"]]["cost"] ?></h2> <?php
+                                                                                                                                            echo $room["calendar"]->draw(date('2023-01-01'));
+                                                                                                                        } ?>
 
 
 
 
 
 
-                    <form method="post" action="./booking.php">
-                                        <label for="transfer_code">Transfer Code</label>
-                                        <input type="text" name="transfer_code">
-                                        <label for="arrival">Arrival</label>
-                                        <input type="date" name="arrival" min="2023-01-01" max="2023-01-31">
-                                        <label for="departure">Departure</label>
-                                        <input type="date" name="departure" min="2023-01-01" max="2023-01-31">
-                                        <select name="room">
-                                                            <option value="basic">Basic</option>
-                                                            <option value="average">Average</option>
-                                                            <option value="high">High</option>
-                                        </select>
-                                        <input type="checkbox" id="poetryWaking" name="poetryWaking" value="poetryWaking">
-                                        <label for="poetryWaking"> Waking by poetry reading. Price: <?= $extras["poetryWaking"]["cost"] ?> </label><br>
+                    <form class="booking" method="post" action="./booking.php">
+                                        <div class="booking-row">
+                                                            <label for="transfer_code">Transfer Code:</label>
+                                                            <input type="text" name="transfer_code">
+                                                            <label for="room">Room Standard:</label>
+                                                            <select name="room">
+                                                                                <option value="basic">Basic (cost:<?= $roomTypes["basic"]["cost"] ?>)</option>
+                                                                                <option value="average">Average (cost:<?= $roomTypes["average"]["cost"] ?>)</option>
+                                                                                <option value="high">High (cost:<?= $roomTypes["high"]["cost"] ?>)</option>
+                                                            </select>
+                                        </div>
+                                        <div class="booking-row">
+                                                            <label for="arrival">Arrival:</label>
+                                                            <input type="date" name="arrival" min="2023-01-01" max="2023-01-31">
+                                                            <label for="departure">Departure:</label>
+                                                            <input type="date" name="departure" min="2023-01-01" max="2023-01-31">
+                                        </div>
+                                        <div class="booking-row">
+                                                            <input type="checkbox" id="poetryWaking" name="poetryWaking" value="poetryWaking">
+                                                            <label for="poetryWaking"> Waking by poetry reading. Price: <?= $extras["poetryWaking"]["cost"] ?> </label><br>
 
 
-                                        <button type="submit">Book!</button>
+                                                            <button type="submit">Book!</button>
+                                        </div>
 
 
                     </form>
