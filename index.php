@@ -69,11 +69,12 @@ foreach ($bookings as $booking) {
                     <meta charset="UTF-8" />
                     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
                     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                    <title>Document</title>
+                    <title>The Good Morrow Hotel</title>
 
                     <link rel="stylesheet" href="./css/header.css">
                     <link rel="stylesheet" href="./css/style.css">
                     <link rel="stylesheet" href="./css/booking.css">
+
 </head>
 
 <body>
@@ -113,9 +114,9 @@ foreach ($bookings as $booking) {
                                         </div>
                                         <div class="booking-row">
                                                             <label for="arrival">Arrival:</label>
-                                                            <input type="date" name="arrival" min="2023-01-01" max="2023-01-31">
+                                                            <input type="date" name="arrival" id="arrival" min="2023-01-01" max="2023-01-31">
                                                             <label for="departure">Departure:</label>
-                                                            <input type="date" name="departure" min="2023-01-01" max="2023-01-31">
+                                                            <input type="date" name="departure" id="departure" min="2023-01-01" max="2023-01-31">
                                         </div>
                                         <div class="booking-row">
                                                             Extras:
@@ -129,7 +130,13 @@ foreach ($bookings as $booking) {
 
 
                     </form>
-                    <!-- <script src="script.js"></script> -->
+                    <script>
+                                        //Sending data for use in javascript
+                                        const roomTypes = <?php echo json_encode($roomTypes); ?>;
+                    </script>
+                    <script src="script.js">
+
+                    </script>
 </body>
 
 </html>
