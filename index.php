@@ -125,7 +125,11 @@ foreach ($bookings as $booking) {
 
 
 
+
+                                        </div>
+                                        <div class="booking-row">
                                                             <button type="submit">Book!</button>
+                                                            <p>Total Cost: </p>
                                         </div>
 
 

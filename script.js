@@ -1,13 +1,11 @@
 const calculatePrice = () => {
   if ((arrivalSelect.value != '') & (departureSelect.value != '')) {
-    console.log('PRAJSTAJM');
     const arrival = new Date(arrivalSelect.value);
     const departure = new Date(departureSelect.value);
     const bookingMilliseconds = departure.getTime() - arrival.getTime();
     const bookingDays = bookingMilliseconds / (60 * 60 * 24 * 1000);
-    console.log(bookingDays);
     if (bookingDays < 1) {
-      console.log('Booking less than 1 day.');
+      costViewer.textContent = 'Total Cost:';
     } else {
       var totalCost = bookingDays * roomTypes[roomSelect.value].cost;
       extras.forEach((extra) => {
@@ -15,7 +13,18 @@ const calculatePrice = () => {
           totalCost += parseFloat(extra.value) * bookingDays;
         }
       });
-      console.log(totalCost);
+
+      //Function for checking for discounts should get data from same place for both php and javascript. Hardcoded for now.
+      let hasDiscount = false;
+      if (bookingDays >= 7) {
+        totalCost *= 0.8;
+        totalCost = totalCost.toFixed(2);
+        hasDiscount = true;
+      }
+      costViewer.textContent = `Total Cost: ${totalCost}`;
+      if (hasDiscount === true)
+        //costViewer.textContent += ' Discount active! 20% off!';
+        console.log(totalCost);
     }
   }
 };
@@ -32,3 +41,5 @@ departureSelect.addEventListener('change', calculatePrice);
 extras.forEach((extra) => {
   extra.addEventListener('change', calculatePrice);
 });
+
+costViewer = document.querySelector('.booking-row p');
