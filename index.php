@@ -98,10 +98,20 @@ foreach ($bookings as $booking) {
     <?php
     foreach ($rooms as $room) :
     ?>
-        <div class=calendarContainer>
-            <h2 class="room-title"><?= $room["quality"] ?> Price: <?= $roomTypes[$room["quality"]]["cost"] ?></h2>
+        <div class=calendarContainer> <!-- Make kebab-case -->
+            <div>
+                <div class="image-container">
+                    <img src="../test/basicRoom.jpg">
+                </div>
+                <h2 class="room-title"><?= $room["quality"] ?> Price: <?= $roomTypes[$room["quality"]]["cost"] ?></h2>
+
+            </div>
+
+
 
             <?php echo $room["calendar"]->draw(date('2023-01-01')); ?>
+
+
         </div>
     <?php endforeach ?>
 

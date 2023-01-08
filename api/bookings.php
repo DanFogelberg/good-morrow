@@ -14,21 +14,27 @@ header("Content-Type:application/json");
 $response = [];
 $db = connect("./hotels.db");
 
+//Check Get
+// if (!isset($_GET["bookings"])) {
+//     echo json_encode("Jaaah");
+//     die();
+// }
+
 //Check Post
 if (!isset($_POST["arrival"], $_POST["departure"], $_POST["room"], $_POST["transferCode"])) {
-                    $response = [
-                                        "usage" => "Make a POST request",
-                                        "form_params" => [
-                                                            "arrival" => "string: YYYY-MM-DD",
-                                                            "departure" => "string: YYYY-MM-DD",
-                                                            "room" => "string: 'basic'/'average'/'high'",
-                                                            "transferCode" => "string: uuid",
-                                                            "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking (More to come)"
-                                        ],
-                                        "response" => "Array with message or error"
-                    ];
-                    echo json_encode($response);
-                    die();
+    $response = [
+        "usage" => "Make a POST request",
+        "form_params" => [
+            "arrival" => "string: YYYY-MM-DD",
+            "departure" => "string: YYYY-MM-DD",
+            "room" => "string: 'basic'/'average'/'high'",
+            "transferCode" => "string: uuid",
+            "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking (More to come)"
+        ],
+        "response" => "Array with message or error"
+    ];
+    echo json_encode($response);
+    die();
 }
 
 //Sanitize
@@ -39,10 +45,10 @@ $transferCode = htmlspecialchars($_POST["transferCode"], ENT_QUOTES);
 
 $bookedExtras = [];
 if (isset($_POST["extras"]) && is_array($_POST["extras"])) {
-                    foreach ($_POST["extras"] as $extra) {
-                                        $extra = htmlspecialchars($extra, ENT_QUOTES);
-                                        if (isset($extras[$extra])) $bookedExtras[] = $extras[$extra];
-                    }
+    foreach ($_POST["extras"] as $extra) {
+        $extra = htmlspecialchars($extra, ENT_QUOTES);
+        if (isset($extras[$extra])) $bookedExtras[] = $extras[$extra];
+    }
 }
 $totalCost = totalCost($arrival, $departure, $rooms[$room]["cost"], $bookedExtras);
 //Checks for potenial errors. Rooms is array of room types from hotelVariables
@@ -51,8 +57,8 @@ if ($result !== true) $response["error"] = $result;
 $result = checkBooking($arrival, $departure, $room, $rooms, $db);
 if ($result !== true) $response["error"] = $result;
 if (isset($response["error"])) {
-                    echo json_encode($response);
-                    die();
+    echo json_encode($response);
+    die();
 }
 
 //Insert booking into database
@@ -62,29 +68,29 @@ $result = insertBooking($arrival, $departure, $room, $rooms, $db);
 $result = transferMoney($transferCode);
 if ($result !== true) $response["error"] = $result;
 if (isset($response["error"])) {
-                    echo json_encode($response);
-                    die();
+    echo json_encode($response);
+    die();
 }
 
 if (count($bookedExtras) < 1) {
-                    $features = "none";
+    $features = "none";
 } else {
-                    $features = "";
-                    $i = 0;
-                    foreach ($bookedExtras as $extra) {
-                                        if ($i > 0) $features .= ", ";
-                                        $features .= $extra["name"];
-                                        $i++;
-                    }
+    $features = "";
+    $i = 0;
+    foreach ($bookedExtras as $extra) {
+        if ($i > 0) $features .= ", ";
+        $features .= $extra["name"];
+        $i++;
+    }
 }
 $bookingResponse = [
-                    "island" => "Point Nemo",
-                    "hotel" => "The Good Morrow",
-                    "arrival_date" => $arrival,
-                    "departure_date" => $departure,
-                    "total_cost" => $totalCost,
-                    "stars" => $stars,
-                    "features" => $features,
-                    "additional_info" => "Very good. Enjoy your stay. But not too much, you might never leave."
+    "island" => "Point Nemo",
+    "hotel" => "The Good Morrow",
+    "arrival_date" => $arrival,
+    "departure_date" => $departure,
+    "total_cost" => $totalCost,
+    "stars" => $stars,
+    "features" => $features,
+    "additional_info" => "Very good. Enjoy your stay. But not too much, you might never leave."
 ];
 echo json_encode($bookingResponse);

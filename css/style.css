@@ -1,60 +1,77 @@
 .offer {
-  background-color: darkgoldenrod;
-  color: black;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  text-align: center;
+    background-color: darkgoldenrod;
+    color: black;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: center;
 
-  padding-top: 10px;
-  padding-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .room-title {
-  background-color: darkgoldenrod;
-  color: black;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  padding-left: 20px;
+    background-color: darkgoldenrod;
+    color: black;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 20px;
+
+    flex: 1;
 }
 
 body {
-  margin: 0;
+    margin: 0;
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
 .calendarSelect {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: darkgoldenrod;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: darkgoldenrod;
 }
 
 .calendarSelect h3 {
-  margin-left: 6%;
-  margin-right: 6%;
-  background-color: darkorange;
-  padding-left: 3%;
-  padding-right: 3%;
-  padding-top: 1%;
-  padding-bottom: 1%;
+    margin-left: 6%;
+    margin-right: 6%;
+    background-color: darkorange;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 1%;
+    padding-bottom: 1%;
 
-  border-radius: 7px;
+    border-radius: 7px;
 }
 .calendarSelect h3:hover {
-  background-color: yellowgreen;
+    background-color: yellowgreen;
 }
 
 .calendarSelect .selected {
-  background-color: brown;
+    background-color: brown;
 }
 
 .calendarSelect .selected:hover {
-  background-color: brown;
+    background-color: brown;
+}
+
+.image-container {
+    width: 50%;
+    /* object-fit: cover; */
+}
+
+img {
+    /* object-fit: cover; */
+
+    width: 100%;
+}
+
+.calendarContainer div {
+    display: flex;
 }
