@@ -1,1 +1,1 @@
-{"rooms":{"basic":{"cost":"4","roomNumber":1},"average":{"cost":"6","roomNumber":2},"high":{"cost":"8","roomNumber":3}},"stars":5,"extras":{"poetryWaking":{"cost":10,"name":"Poetry Waking"}}}
+{"rooms":{"basic":{"cost":"4","roomNumber":1, "image":"./images/basicRoom.jpg"},"average":{"cost":"6","roomNumber":2, "image":"./images/averageRoom.jpg"},"high":{"cost":"8","roomNumber":3, "image":"./images/highRoom.jpg"}},"stars":5,"extras":{"poetryWaking":{"cost":10,"name":"Poetry Waking"}}}

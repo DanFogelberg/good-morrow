@@ -101,7 +101,7 @@ foreach ($bookings as $booking) {
         <div class=calendarContainer> <!-- Make kebab-case -->
             <div>
                 <div class="image-container">
-                    <img src="../test/basicRoom.jpg">
+                    <img src="<?= $roomTypes[$room["quality"]]["image"] ?>">
                 </div>
                 <h2 class="room-title"><?= $room["quality"] ?> Price: <?= $roomTypes[$room["quality"]]["cost"] ?></h2>
 
@@ -120,7 +120,7 @@ foreach ($bookings as $booking) {
 
 
 
-
+    <!-- Should add $adress to action= on final version -->
     <form class="booking" method="post" action="./booking.php">
         <div class="booking-row">
             <label for="transfer_code">Transfer Code:</label>
