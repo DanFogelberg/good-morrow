@@ -88,9 +88,9 @@ foreach ($bookings as $booking) {
     </header>
     <h2 class="offer"> Right now you get 20% off if you book a whole week or more!</h2>
     <div class="calendarSelect">
-        <h3 data-calendarnumber="0">Basic</h3>
-        <h3 data-calendarnumber="1">Average</h3>
-        <h3 data-calendarnumber="2">High</h3>
+        <h3 data-calendarnumber="0">Basic: <?= $roomTypes["basic"]["cost"] ?></h3>
+        <h3 data-calendarnumber="1">Average: <?= $roomTypes["average"]["cost"] ?></h3>
+        <h3 data-calendarnumber="2">High: <?= $roomTypes["high"]["cost"] ?></h3>
     </div>
 
 
@@ -119,9 +119,9 @@ foreach ($bookings as $booking) {
         <div class="booking-row">
             <label for="room">Room Standard:</label>
             <select name="room">
-                <option value="basic">Basic (Cost:<?= $roomTypes["basic"]["cost"] ?>)</option>
-                <option value="average">Average (Cost:<?= $roomTypes["average"]["cost"] ?>)</option>
-                <option value="high">High (Cost:<?= $roomTypes["high"]["cost"] ?>)</option>
+                <option value="basic" data-calendarnumber="0">Basic (Cost:<?= $roomTypes["basic"]["cost"] ?>)</option>
+                <option value="average" data-calendarnumber="1">Average (Cost:<?= $roomTypes["average"]["cost"] ?>)</option>
+                <option value="high" data-calendarnumber="2">High (Cost:<?= $roomTypes["high"]["cost"] ?>)</option>
             </select>
         </div>
         <div class="booking-row">

@@ -36,6 +36,11 @@ const setActiveCalendar = (activeKey) => {
     });
     console.log(activeKey);
     calendars[activeKey].classList.remove('hidden');
+
+    calendarSelects.forEach((calendarSelect) => {
+        calendarSelect.classList.remove('selected');
+    });
+    calendarSelects[activeKey].classList.add('selected');
 };
 
 //roomTypes = $roomTypes from php as object
@@ -44,7 +49,10 @@ arrivalSelect = document.querySelector('#arrival');
 departureSelect = document.querySelector('#departure');
 extras = document.querySelectorAll('.extra');
 
-roomSelect.addEventListener('change', calculatePrice);
+roomSelect.addEventListener('change', (e) => {
+    setActiveCalendar(e.target.selectedIndex);
+    calculatePrice();
+});
 arrivalSelect.addEventListener('change', calculatePrice);
 departureSelect.addEventListener('change', calculatePrice);
 extras.forEach((extra) => {
@@ -54,21 +62,13 @@ extras.forEach((extra) => {
 costViewer = document.querySelector('.booking-row p');
 
 calendars = document.querySelectorAll('.calendarContainer');
-
-calendars[1].classList.add('hidden');
-calendars[2].classList.add('hidden');
-console.log(calendars[1]);
-
 calendarSelects = document.querySelectorAll('.calendarSelect h3');
-calendarSelects[0].classList.add('selected');
+setActiveCalendar(0);
 
 calendarSelects.forEach((select) => {
     select.addEventListener('click', (e) => {
-        console.log(e.target);
-        calendarSelects.forEach((calendarSelect) => {
-            calendarSelect.classList.remove('selected');
-        });
-        e.target.classList.add('selected');
         setActiveCalendar(e.target.dataset.calendarnumber);
+        roomSelect.selectedIndex = e.target.dataset.calendarnumber;
+        calculatePrice();
     });
 });
