@@ -14,11 +14,40 @@ header("Content-Type:application/json");
 $response = [];
 $db = connect("./hotels.db");
 
-//Check Get
-// if (!isset($_GET["bookings"])) {
-//     echo json_encode("Jaaah");
-//     die();
-// }
+
+if (isset($_GET["bookings"])) {
+    //Get bookings from DB
+    $statement = $db->prepare("SELECT * FROM bookings");
+    $statement->execute();
+    $bookings = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $response["bookings"] = $bookings;
+}
+if (isset($_GET["arrival"], $_GET["departure"], $_GET["room"])) {
+    $bookedExtras = [];
+    if (isset($_GET["extras"]) && is_array($_GET["extras"])) {
+        foreach ($_GET["extras"] as $extra) {
+            $extra = htmlspecialchars($extra, ENT_QUOTES);
+            if (isset($extras[$extra])) $bookedExtras[] = $extras[$extra];
+        }
+    }
+    $arrival = htmlspecialchars($_GET["arrival"], ENT_QUOTES);
+    $departure = htmlspecialchars($_GET["departure"], ENT_QUOTES);
+    $room = htmlspecialchars($_GET["room"], ENT_QUOTES);
+
+    $result = checkBooking($arrival, $departure, $room, $rooms, $db);
+    if ($result === true) {
+        $response["available"] = true;
+    } else {
+        $response["error"] = $result;
+    }
+
+    $response["cost"] = totalCost($arrival, $departure, $rooms[$room]["cost"], $bookedExtras);
+}
+if (!empty($response)) {
+    echo json_encode($response);
+    die();
+}
+
 
 //Check Post
 if (!isset($_POST["arrival"], $_POST["departure"], $_POST["room"], $_POST["transferCode"])) {
@@ -31,7 +60,15 @@ if (!isset($_POST["arrival"], $_POST["departure"], $_POST["room"], $_POST["trans
             "transferCode" => "string: uuid",
             "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking (More to come)"
         ],
-        "response" => "Array with message or error"
+        "response" => "Array with message or error",
+        "get" => "Or make a GET request with query. bookings returns all bookings. room + arrival + departure returns available = true/false and cost: int. extras can be added to this.",
+        "query" => [
+            "bookings" => "true 'Get all bookings.'",
+            "arrival" => "string: YYYY-MM-DD",
+            "departure" => "string: YYYY-MM-DD",
+            "room" => "string: 'basic'/'average'/'high'",
+            "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking (More to come)"
+        ]
     ];
     echo json_encode($response);
     die();
