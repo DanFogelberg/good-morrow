@@ -24,3 +24,37 @@ body {
 * {
   box-sizing: border-box;
 }
+
+.hidden {
+  display: none;
+}
+
+.calendarSelect {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: darkgoldenrod;
+}
+
+.calendarSelect h3 {
+  margin-left: 6%;
+  margin-right: 6%;
+  background-color: darkorange;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+
+  border-radius: 7px;
+}
+.calendarSelect h3:hover {
+  background-color: yellowgreen;
+}
+
+.calendarSelect .selected {
+  background-color: brown;
+}
+
+.calendarSelect .selected:hover {
+  background-color: brown;
+}
