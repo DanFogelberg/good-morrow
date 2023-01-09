@@ -182,7 +182,7 @@ function totalCost($arrival, $departure, $roomCost, $extras = [])
     $totalCost = $roomCost * $daysBooked;
 
     foreach ($extras as $extra) {
-        $totalCost += $extra["cost"] * $daysBooked;
+        $totalCost += $extra["cost"]; //*daysBooked if want to add daily features
     }
     $totalCost = checkDiscounts($arrival, $departure, $roomCost, $extras, $daysBooked, $totalCost);
     return $totalCost;

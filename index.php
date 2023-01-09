@@ -136,6 +136,9 @@ foreach ($bookings as $booking) {
             <input type="checkbox" class="extra" name="poetryWaking" value=<?= $extras["poetryWaking"]["cost"] ?>>
             <label for="poetryWaking"> Waking by poetry reading (Cost: <?= $extras["poetryWaking"]["cost"] ?>) </label><br>
 
+            <input type="checkbox" class="extra" name="poem" value=<?= $extras["poem"]["cost"] ?>>
+            <label for="poem"> Poem with your booking (Cost: <?= $extras["poem"]["cost"] ?>) </label><br>
+
 
 
 

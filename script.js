@@ -10,7 +10,7 @@ const calculatePrice = () => {
             var totalCost = bookingDays * roomTypes[roomSelect.value].cost;
             extras.forEach((extra) => {
                 if (extra.checked === true) {
-                    totalCost += parseFloat(extra.value) * bookingDays;
+                    totalCost += parseFloat(extra.value);
                 }
             });
 
