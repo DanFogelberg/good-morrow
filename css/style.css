@@ -15,6 +15,9 @@
     margin-top: 0px;
     margin-bottom: 0px;
     padding-left: 20px;
+    padding-right: 20px;
+    align-self: center;
+    height: 100%;
 
     flex: 1;
 }
@@ -72,6 +75,18 @@ img {
     width: 100%;
 }
 
-.calendarContainer div {
+.calendarContainer > div {
     display: flex;
+    background-color: darkgoldenrod;
+    align-items: center;
+}
+
+@media screen and (max-width: 600px) {
+    .calendarContainer > div {
+        flex-direction: column;
+    }
+
+    .image-container {
+        width: 100%;
+    }
 }

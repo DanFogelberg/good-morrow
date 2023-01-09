@@ -94,7 +94,7 @@ foreach ($bookings as $booking) {
                 <div class="image-container">
                     <img src="<?= $roomTypes[$room["quality"]]["image"] ?>">
                 </div>
-                <h2 class="room-title"><?= $room["quality"] ?> Price: <?= $roomTypes[$room["quality"]]["cost"] ?></h2>
+                <h2 class="room-title"><?= $roomTypes[$room["quality"]]["description"] ?></h2>
 
             </div>
 
