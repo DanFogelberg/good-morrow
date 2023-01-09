@@ -1,26 +1,30 @@
+a {
+    all: unset;
+}
+
 header {
-  display: flex;
-  justify-content: space-between;
-  background-color: brown;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    background-color: brown;
+    align-items: center;
 }
 
 h1 {
-  margin-left: 20px;
-  color: orange;
+    margin-left: 20px;
+    font-size: 42px;
+    color: orange;
 }
 
 nav {
-  display: flex;
-  margin-right: 20px;
+    display: flex;
+    margin-right: 20px;
 }
 
-a {
-  all: unset;
-  margin: 20px;
-  font-size: 20px;
+nav a {
+    margin: 20px;
+    font-size: 20px;
 }
 
 a:hover {
-  color: orange;
+    color: orange;
 }

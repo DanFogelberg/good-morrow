@@ -76,16 +76,7 @@ foreach ($bookings as $booking) {
 </head>
 
 <body>
-    <header>
-        <h1>The Good Morrow Hotel</h1>
-        <nav>
-            <a href="<?= $adress ?>/admin.php ">Admin</a>
-            <a href="<?= $adress ?>/api/bookings.php ">API</a>
-        </nav>
-
-
-
-    </header>
+    <?php require "./header.php"; ?>
     <h2 class="offer"> Right now you get 20% off if you book a whole week or more!</h2>
     <div class="calendarSelect">
         <h3 data-calendarnumber="0">Basic: <?= $roomTypes["basic"]["cost"] ?></h3>
