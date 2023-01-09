@@ -72,7 +72,7 @@ function checkBooking($arrival, $departure, $room, $rooms, $db): string | bool
 
     if (!validateDate($arrival) || !validateDate($departure)) {
         return "Please enter date in format: 'YYYY-MM-DD'";
-    } else if (date("Y-m-d") > $arrival) {
+    } else if (/*date("Y-m-d") > $arrival*/false) {
         return "Error. Day of arrival has already passed.";
     } else if (strtotime($departure) <= strtotime($arrival)) {
         return "Departure date is before arrival.";
