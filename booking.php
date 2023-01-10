@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-require "hotelFunctions.php";
+require "scripts/hotelFunctions.php";
+require "scripts/bookingFunctions.php";
 require "hotelVariables.php"; //Room costs
 require "vendor/autoload.php";
 
@@ -12,7 +13,7 @@ use GuzzleHttp\Exception\ClientException;
 header('Content-Type: application/json');
 $response = [];
 
-$db = connect("./hotels.db");
+$db = connect("hotels.db");
 
 //Check Post
 if (empty($_POST["transfer_code"]) || empty($_POST["room"])) {
@@ -64,17 +65,13 @@ if (isset($response["error"])) {
 }
 
 //RETURN CONFIRMATION
-// if (count($bookedExtras) < 1) {
-//     $features = "none";
-// } else {
-//     $features = "";
-//     $i = 0;
-//     foreach ($bookedExtras as $extra) {
-//         if ($i > 0) $features .= ", ";
-//         $features .= $extra["name"];
-//         $i++;
-//     }
-// }
+
+$info = ["message" => "Very good. Enjoy your stay. But not too much, you might never leave."];
+foreach ($bookedExtras as $extra) {
+    if ($extra["name"] === "Poem") $info["poem"] = "En dikt!";
+}
+
+
 $bookingResponse = [
     "island" => "Point Nemo",
     "hotel" => "The Good Morrow",
@@ -83,6 +80,6 @@ $bookingResponse = [
     "total_cost" => $totalCost,
     "stars" => $stars,
     "features" => $bookedExtras,
-    "additional_info" => "Very good. Enjoy your stay. But not too much, you might never leave."
+    "additional_info" => $info
 ];
 echo json_encode($bookingResponse);

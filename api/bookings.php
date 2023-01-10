@@ -1,9 +1,9 @@
 <?php
 
 require "../hotelVariables.php";
-require "../hotelFunctions.php";
+require "../scripts/hotelFunctions.php";
+require "../scripts/bookingFunctions.php";
 require "../vendor/autoload.php";
-
 
 
 
@@ -52,24 +52,30 @@ if (!empty($response)) {
 //Check Post
 if (!isset($_POST["arrival"], $_POST["departure"], $_POST["room"], $_POST["transferCode"])) {
     $response = [
-        "usage" => "Make a POST request",
-        "form_params" => [
-            "arrival" => "string: YYYY-MM-DD",
-            "departure" => "string: YYYY-MM-DD",
-            "room" => "string: 'basic'/'average'/'high'",
-            "transferCode" => "string: uuid",
-            "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking (More to come)"
+        "usage" =>  "Make a POST request or GET Request",
+        "POST" => [
+            "form_params" => [
+                "arrival" => "string: YYYY-MM-DD",
+                "departure" => "string: YYYY-MM-DD",
+                "room" => "string: 'basic'/'average'/'high'",
+                "transferCode" => "string: uuid",
+                "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking (More to come)"
+            ],
+            "response" => "Array with message or error"
         ],
-        "response" => "Array with message or error",
-        "get" => "Or make a GET request with query. bookings returns all bookings. room + arrival + departure returns available = true/false and cost: int. extras can be added to this.",
-        "query" => [
-            "bookings" => "true 'Get all bookings.'",
-            "arrival" => "string: YYYY-MM-DD",
-            "departure" => "string: YYYY-MM-DD",
-            "room" => "string: 'basic'/'average'/'high'",
-            "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking (More to come)"
+        "GET" => [
+
+            "query" => [
+                "bookings" => "true 'Get all bookings.'",
+                "arrival" => "string: YYYY-MM-DD",
+                "departure" => "string: YYYY-MM-DD",
+                "room" => "string: 'basic'/'average'/'high'",
+                "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking (More to come)"
+            ],
+            "response" =>  "Array with contents depending on parameters sent: bookings returns all bookings. room + arrival + departure returns available = true/false and cost: int|float. extras can be added to this."
         ]
     ];
+
     echo json_encode($response);
     die();
 }

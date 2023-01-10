@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-require "hotelFunctions.php";
+require "scripts/hotelFunctions.php";
 require "hotelVariables.php";
 require "vendor/autoload.php";
 
@@ -154,9 +154,11 @@ foreach ($bookings as $booking) {
         //Sending data for use in javascript
         const roomTypes = <?php echo json_encode($roomTypes); ?>;
     </script>
-    <script src="script.js">
+    <script src="scripts/functions.js">
+
 
     </script>
+    <script src="scripts/script.js"></script>
 </body>
 
 </html>
