@@ -84,7 +84,8 @@ function checkTransferCode(string $transferCode, int|float $totalCost): string |
             }
             return "An error has occured! $response[error]";
         }
-        if (!array_key_exists("amount", $response) || $response["amount"] < $totalCost) {
+        //Extra check because bank API doesn't handle floats very well. Accurate enough for 2 decimals.
+        if (!array_key_exists("amount", $response) || $response["amount"] * 100 < intval($totalCost * 100)) {
 
             return "Transfer code is not valdid for enough money.";
         }

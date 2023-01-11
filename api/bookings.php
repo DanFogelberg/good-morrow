@@ -14,7 +14,40 @@ header("Content-Type:application/json");
 $response = [];
 $db = connect("./hotels.db");
 
-//First check and handle GET requests
+
+//Check Get and Post. Returns instructions if no set of correct variables
+if (!isset($_POST["arrival"], $_POST["departure"], $_POST["room"], $_POST["transferCode"]) & !isset($_GET["bookings"]) & !isset($_GET["arrival"], $_GET["departure"], $_GET["room"])) {
+    $response = [
+        "usage" =>  "Make a POST request or GET Request",
+        "POST" => [
+            "form_params" => [
+                "arrival" => "string: YYYY-MM-DD",
+                "departure" => "string: YYYY-MM-DD",
+                "room" => "string: 'basic'/'average'/'high'",
+                "transferCode" => "string: uuid",
+                "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking (More to come)"
+            ],
+            "response" => "Array with message or error"
+        ],
+        "GET" => [
+
+            "query" => [
+                "bookings" => "true 'Get all bookings.'",
+                "arrival" => "string: YYYY-MM-DD",
+                "departure" => "string: YYYY-MM-DD",
+                "room" => "string: 'basic'/'average'/'high'",
+                "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking (More to come)"
+            ],
+            "response" =>  "Array with contents depending on parameters sent: bookings returns all bookings. room + arrival + departure returns available = true/false and cost: int|float. extras can be added to this."
+        ]
+    ];
+
+    echo json_encode($response);
+    die();
+}
+
+
+//GET//////////////////////////////////////////////////////////////////////////////
 
 //Gets bookings from DB
 if (isset($_GET["bookings"])) {
@@ -53,37 +86,8 @@ if (!empty($response)) {
     die();
 }
 
-
-//Check Post. If none return instructions
-if (!isset($_POST["arrival"], $_POST["departure"], $_POST["room"], $_POST["transferCode"])) {
-    $response = [
-        "usage" =>  "Make a POST request or GET Request",
-        "POST" => [
-            "form_params" => [
-                "arrival" => "string: YYYY-MM-DD",
-                "departure" => "string: YYYY-MM-DD",
-                "room" => "string: 'basic'/'average'/'high'",
-                "transferCode" => "string: uuid",
-                "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking (More to come)"
-            ],
-            "response" => "Array with message or error"
-        ],
-        "GET" => [
-
-            "query" => [
-                "bookings" => "true 'Get all bookings.'",
-                "arrival" => "string: YYYY-MM-DD",
-                "departure" => "string: YYYY-MM-DD",
-                "room" => "string: 'basic'/'average'/'high'",
-                "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking (More to come)"
-            ],
-            "response" =>  "Array with contents depending on parameters sent: bookings returns all bookings. room + arrival + departure returns available = true/false and cost: int|float. extras can be added to this."
-        ]
-    ];
-
-    echo json_encode($response);
-    die();
-}
+//POST///////////////////////////////////////////////////////////////////
+//If code got this far, it is a POST request with the correct variables
 
 //Sanitize
 $arrival = htmlspecialchars($_POST["arrival"], ENT_QUOTES);
