@@ -154,23 +154,23 @@ function insertBooking(string $arrival, string $departure, string $room, array $
 
 function transferMoney(string $transferCode): string | bool
 {
-    // $client = new GuzzleHttp\Client();
-    // $options = [
-    //     'form_params' => [
-    //         "user" => "Dan",
-    //         "transferCode" => $transferCode
-    //     ]
-    // ];
+    $client = new GuzzleHttp\Client();
+    $options = [
+        'form_params' => [
+            "user" => "Dan",
+            "transferCode" => $transferCode
+        ]
+    ];
 
-    // try {
-    //     $result = $client->post("https://www.yrgopelago.se/centralbank/deposit", $options);
-    //     $result = $result->getBody()->getContents();
-    //     $result = json_decode($result, true);
-    //     return true;
-    // } catch (\Exception $e) {
-    //     //Perhaps the best solution here would be to automatically remove the booking from the hotel?
-    //     return "Booking successful but there was an error with the money transfer. Please contact the hotel to resolve this manually. Error:" . $e;
-    // }
+    try {
+        $result = $client->post("https://www.yrgopelago.se/centralbank/deposit", $options);
+        $result = $result->getBody()->getContents();
+        $result = json_decode($result, true);
+        return true;
+    } catch (\Exception $e) {
+        //Perhaps the best solution here would be to automatically remove the booking from the hotel?
+        return "Booking successful but there was an error with the money transfer. Please contact the hotel to resolve this manually. Error:" . $e;
+    }
     return true;
 }
 
@@ -195,11 +195,42 @@ function bookingLog(string $booking)
 //Other //////////////////////////////////////////////////////////////////////////////////
 
 
+//Returns random poem
 function getPoem(): string
 {
-    return "Jag föddes sent på jorden
-    Vilken fantastisk tur
-    Jag lever nu
-    Men ändå mest
-    I det förgångna";
+    $poems = [
+        "Jag föddes sent på jorden
+        Vilken fantastisk tur
+        Jag lever nu
+        Men ändå mest
+        I det förgångna",
+
+        "Det råder halvdager i min säng
+        Skymningslandets bleka sken
+        Mellan min misantropi och kärlek till mörkret
+        Jag går för att möta en människa
+
+        En människa sann
+        En människa i niohundratjugoentusensexhundra pixlar
+        Som kanske kan
+        Lämna mig ifred",
+
+        "Genom gyllene strålar
+        och med hjälp av vitaminer
+        känner jag din närvaro
+        så som sjuka ser syner.
+
+        Vi vandrar genom nya världar
+        i mitt vardagsrum.
+        Gud andas i hallen,
+        du kysser hans mun
+
+        Du kom för att säga
+        något enkelt till mig.
+        Att jag glömt hur mycket
+        jag har saknat mig."
+    ];
+
+
+    return $poems[array_rand($poems)];
 }
