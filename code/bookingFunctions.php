@@ -1,12 +1,14 @@
 <?php
-//Functions for validating bookings, calculating costs, validating transfer codes, adding transfer codes to account and adding bookings to database
+
+declare(strict_types=1);
+//Functions for validating bookings, calculating costs, validating transfer codes, adding transfer codes to account, adding bookings to database and logging results/errors
 
 
 //Validation//////////////////////////////////////////////////////////////////
 
 
 //Returns true if valid or string with error
-function checkBooking($arrival, $departure, $room, $rooms, $db): string | bool
+function checkBooking(string $arrival, string $departure, string $room, array $rooms, object $db): string | bool
 {
 
     $response = [];
@@ -39,13 +41,13 @@ function checkBooking($arrival, $departure, $room, $rooms, $db): string | bool
     return true;
 }
 
-function validateDate($date, $format = 'Y-m-d'): bool
+function validateDate(string $date, string $format = 'Y-m-d'): bool
 {
     $d = DateTime::createFromFormat($format, $date);
     return $d && $d->format($format) === $date;
 }
 
-function dateWithin($date, $startDate, $endDate): bool
+function dateWithin(string $date, string $startDate, string $endDate): bool
 {
     if (strtotime($date) >= strtotime($startDate) && strtotime($date) <= strtotime($endDate)) {
         return true;
@@ -55,7 +57,7 @@ function dateWithin($date, $startDate, $endDate): bool
 }
 
 //Returns true if successful, otherwise error as string
-function checkTransferCode($transferCode, $totalCost): string | bool
+function checkTransferCode(string $transferCode, int|float $totalCost): string | bool
 {
     if (!isValidUuid($transferCode)) {
         return "Invalid transferCode format";
@@ -95,7 +97,7 @@ function checkTransferCode($transferCode, $totalCost): string | bool
 //Cost calculation////////////////////////////////////////////////////////////////////////
 
 
-function totalCost($arrival, $departure, $roomCost, $extras = []): float | int
+function totalCost(string $arrival, string $departure, int|float $roomCost, array $extras = []): float | int
 {
 
     $secondsBooked = strtotime($departure) - strtotime($arrival);
@@ -111,14 +113,14 @@ function totalCost($arrival, $departure, $roomCost, $extras = []): float | int
 
 
 //Will check for all discounts. Has extra parameters that will probably be used for future discounts
-function checkDiscounts($arrival, $departure, $roomCost, $extras, $daysBooked, $totalCost): float | int
+function checkDiscounts(string $arrival, string $departure, int|float $roomCost, array $extras, int $daysBooked, int|float $totalCost): float|int
 {
     $totalCost = fullWeekDiscount($daysBooked, $totalCost);
     return $totalCost;
 }
 
 //Specific 20% for full week
-function fullWeekDiscount($daysBooked, $totalCost): float
+function fullWeekDiscount(int $daysBooked, int|float $totalCost): float
 {
     global $discounts; //Discounts from hotelVariables.php
     if ($daysBooked >= 7 & $discounts["fullWeek"] === true) {
@@ -134,7 +136,7 @@ function fullWeekDiscount($daysBooked, $totalCost): float
 //Database manipulation////////////////////////////////////////////////////////////////////////
 
 //Put booking into database
-function insertBooking($arrival, $departure, $room, $rooms, $db): bool
+function insertBooking(string $arrival, string $departure, string $room, array $rooms, object $db): bool
 {
 
 
@@ -150,7 +152,7 @@ function insertBooking($arrival, $departure, $room, $rooms, $db): bool
 
 
 
-function transferMoney($transferCode): string | bool
+function transferMoney(string $transferCode): string | bool
 {
     $client = new GuzzleHttp\Client();
     $options = [
@@ -169,4 +171,21 @@ function transferMoney($transferCode): string | bool
         //Perhaps the best solution here would be to automatically remove the booking from the hotel?
         return "Booking successful but there was an error with the money transfer. Please contact the hotel to resolve this manually. Error:" . $e;
     }
+}
+
+
+
+//Log//////////////////////////////////////////////////////////////////////
+
+function errorLog(string $error)
+{
+    date_default_timezone_set("Europe/Stockholm");
+    file_put_contents(__DIR__ . "/../log/errorLog.txt", $error . " " . date("Y-m-d H:i:s") . "\n", FILE_APPEND);
+}
+
+function bookingLog(string $booking)
+{
+    date_default_timezone_set("Europe/Stockholm");
+    file_put_contents(__DIR__ . "/../log/bookingLog.txt", "New booking at: " . " " . date("Y-m-d H:i:s") . "\n", FILE_APPEND);
+    file_put_contents(__DIR__ . "/../log/bookingLog.txt", $booking . "\n", FILE_APPEND); //Not perfect format, but this is mostly just for fun
 }
