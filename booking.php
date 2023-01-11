@@ -50,8 +50,9 @@ if (isset($response["error"])) {
 
 //Insert booking into database
 $result = insertBooking($arrival, $departure, $room, $rooms, $db);
-if ($result !== true) $response["error"] = "Database Error.";
+if ($result !== true) $response["error"] = "Database error on booking insert.";
 if (isset($response["error"])) {
+    file_put_contents("./log/errorLog.txt", $response["error"] . " " . date("Y-m-d H:i:s") . "\n", FILE_APPEND);
     echo json_encode($response);
     die();
 }
@@ -60,6 +61,7 @@ if (isset($response["error"])) {
 $result = transferMoney($transferCode);
 if ($result !== true) $response["error"] = $result;
 if (isset($response["error"])) {
+    file_put_contents("./log/errorLog.txt", $response["error"] . " " . date("Y-m-d H:i:s") . "\n", FILE_APPEND);
     echo json_encode($response);
     die();
 }
@@ -79,4 +81,7 @@ $bookingResponse = [
     "features" => $bookedExtras,
     "additional_info" => $info
 ];
-echo json_encode($bookingResponse);
+$bookingResponse = json_encode($bookingResponse);
+file_put_contents("./log/bookingLog.txt", "New booking at: " . " " . date("Y-m-d H:i:s") . "\n", FILE_APPEND);
+file_put_contents("./log/bookingLog.txt", $bookingResponse . "\n", FILE_APPEND); //Not perfect format, but this is mostly just for fun
+echo $bookingResponse;

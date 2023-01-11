@@ -54,7 +54,7 @@ foreach ($bookings as $booking) {
     $rooms[$booking["room_number"]]["calendar"]->addEvent(
         $booking["arrival_date"],   # start date in either Y-m-d
         $last_occupied->format('Y-m-d'),   # end date in either Y-m-d
-        '',  # event name text
+        '',  # event name text. (Needed because masked is fourth arg)
         true,           # should the date be masked - boolean default true
     );
 }

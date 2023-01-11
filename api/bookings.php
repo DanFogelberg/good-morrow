@@ -1,8 +1,8 @@
 <?php
 
-require "../hotelVariables.php";
-require "../scripts/hotelFunctions.php";
-require "../scripts/bookingFunctions.php";
+require "../code/hotelVariables.php";
+require "../code/hotelFunctions.php";
+require "../code/bookingFunctions.php";
 require "../vendor/autoload.php";
 
 
@@ -43,6 +43,8 @@ if (isset($_GET["arrival"], $_GET["departure"], $_GET["room"])) {
 
     $response["cost"] = totalCost($arrival, $departure, $rooms[$room]["cost"], $bookedExtras);
 }
+
+//Send back response from
 if (!empty($response)) {
     echo json_encode($response);
     die();
@@ -106,25 +108,29 @@ if (isset($response["error"])) {
 
 //Insert booking into database
 $result = insertBooking($arrival, $departure, $room, $rooms, $db);
+if ($result !== true) $response["error"] = "Database error on booking insert.";
+if (isset($response["error"])) {
+    file_put_contents("../log/errorLog.txt", $response["error"] . " " . date("Y-m-d H:i:s") . "\n", FILE_APPEND);
+    echo json_encode($response);
+    die();
+}
+
+
+
+
 
 //Finally transfer money. This is done last as an error with the database would be easier to fix than an error with the bank.
 $result = transferMoney($transferCode);
 if ($result !== true) $response["error"] = $result;
 if (isset($response["error"])) {
+    file_put_contents("../log/errorLog.txt", $response["error"] . " " . date("Y-m-d H:i:s") . "\n", FILE_APPEND);
     echo json_encode($response);
     die();
 }
 
-if (count($bookedExtras) < 1) {
-    $features = "none";
-} else {
-    $features = "";
-    $i = 0;
-    foreach ($bookedExtras as $extra) {
-        if ($i > 0) $features .= ", ";
-        $features .= $extra["name"];
-        $i++;
-    }
+$info = ["message" => "Very good. Enjoy your stay. But not too much, you might never leave."];
+foreach ($bookedExtras as $extra) {
+    if ($extra["name"] === "Poem") $info["poem"] = "En dikt!";
 }
 $bookingResponse = [
     "island" => "Point Nemo",
@@ -133,7 +139,10 @@ $bookingResponse = [
     "departure_date" => $departure,
     "total_cost" => $totalCost,
     "stars" => $stars,
-    "features" => $features,
-    "additional_info" => "Very good. Enjoy your stay. But not too much, you might never leave."
+    "features" => $bookedExtras,
+    "additional_info" => $info
 ];
-echo json_encode($bookingResponse);
+$bookingResponse = json_encode($bookingResponse);
+file_put_contents("../log/bookingLog.txt", "New booking at: " . " " . date("Y-m-d H:i:s") . "\n", FILE_APPEND);
+file_put_contents("../log/bookingLog.txt", $bookingResponse . "\n", FILE_APPEND); //Not perfect format, but this is mostly just for fun
+echo $bookingResponse;
