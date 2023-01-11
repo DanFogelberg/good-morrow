@@ -29,8 +29,9 @@ $rooms[3] = [
 ];
 //Calendars setup
 foreach ($rooms as $room) {
-    $room["calendar"]->stylesheet();
+
     $room["calendar"]->useMondayStartingDate();
+    $room["calendar"]->stylesheet();
 }
 
 
@@ -72,6 +73,8 @@ foreach ($bookings as $booking) {
     <link rel="stylesheet" href="./css/header.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/booking.css">
+    <link rel="stylesheet" type="text/css" href="./css/calendar.css">
+
 
 </head>
 
@@ -138,6 +141,10 @@ foreach ($bookings as $booking) {
 
             <input type="checkbox" class="extra" name="poem" value=<?= $extras["poem"]["cost"] ?>>
             <label for="poem"> Poem with your booking (Cost: <?= $extras["poem"]["cost"] ?>$) </label><br>
+
+            <input type="checkbox" class="extra" name="musicVideo" value=<?= $extras["musicVideo"]["cost"] ?>>
+            <label for="musicVideo"> Special access to the Hotel Song! (<span class="red" ;>
+                    Rare Demo Version</span> )</class> (Cost: <?= $extras["musicVideo"]["cost"] ?>$) </label><br>
 
 
 

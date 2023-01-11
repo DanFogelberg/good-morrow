@@ -155,23 +155,23 @@ function insertBooking(string $arrival, string $departure, string $room, array $
 
 function transferMoney(string $transferCode): string | bool
 {
-    $client = new GuzzleHttp\Client();
-    $options = [
-        'form_params' => [
-            "user" => "Dan",
-            "transferCode" => $transferCode
-        ]
-    ];
+    // $client = new GuzzleHttp\Client();
+    // $options = [
+    //     'form_params' => [
+    //         "user" => "Dan",
+    //         "transferCode" => $transferCode
+    //     ]
+    // ];
 
-    try {
-        $result = $client->post("https://www.yrgopelago.se/centralbank/deposit", $options);
-        $result = $result->getBody()->getContents();
-        $result = json_decode($result, true);
-        return true;
-    } catch (\Exception $e) {
-        //Perhaps the best solution here would be to automatically remove the booking from the hotel?
-        return "Booking successful but there was an error with the money transfer. Please contact the hotel to resolve this manually. Error:" . $e;
-    }
+    // try {
+    //     $result = $client->post("https://www.yrgopelago.se/centralbank/deposit", $options);
+    //     $result = $result->getBody()->getContents();
+    //     $result = json_decode($result, true);
+    //     return true;
+    // } catch (\Exception $e) {
+    //     //Perhaps the best solution here would be to automatically remove the booking from the hotel?
+    //     return "Booking successful but there was an error with the money transfer. Please contact the hotel to resolve this manually. Error:" . $e;
+    // }
     return true;
 }
 

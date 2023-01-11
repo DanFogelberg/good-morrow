@@ -1,23 +1,23 @@
 .booking {
-  padding-top: 10px;
-  background-color: goldenrod;
-  margin-bottom: 0px;
+    padding-top: 10px;
+    /* background-color: goldenrod; */
+    margin-bottom: 0px;
 }
 
 .booking-row {
-  padding-bottom: 10px;
-  padding-left: 20px;
-  display: flex;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    display: flex;
 }
 
 label {
-  padding-right: 10px;
+    padding-right: 10px;
 }
 
 input {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 button {
-  margin-right: 10px;
+    margin-right: 10px;
 }

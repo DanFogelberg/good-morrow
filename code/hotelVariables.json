@@ -1,1 +1,28 @@
-{"rooms":{"basic":{"cost":5,"roomNumber":1,"image":".\/images\/basicRoom.jpg","description":"Our most basic room is not basic at all. Extravagant and isolated. Insanity on a budget. Now you too can be a tortured and rich artist."},"average":{"cost":7,"roomNumber":2,"image":".\/images\/averageRoom.jpg","description":"These days average isn't average at all. Be anyone. Be no one. Be an island. Book our average room for a certified unique experience. Become an artist."},"high":{"cost":9,"roomNumber":3,"image":".\/images\/highRoom.jpg","description":"A room without limits. Wander the coast of Nemo Island from the comfort of your own room. The sky is the limit. A room fit for a true artist."}},"stars":5,"extras":{"poetryWaking":{"name":"Poetry Waking","cost":10},"poem":{"name":"Poem","cost":15}}}
+{
+    "rooms": {
+        "basic": {
+            "cost": 5,
+            "roomNumber": 1,
+            "image": "./images/basicRoom.jpg",
+            "description": "Our most basic room is not basic at all. Extravagant and isolated. Insanity on a budget. Now you too can be a tortured and rich artist."
+        },
+        "average": {
+            "cost": 7,
+            "roomNumber": 2,
+            "image": "./images/averageRoom.jpg",
+            "description": "These days average isn't average at all. Be anyone. Be no one. Be an island. Book our average room for a certified unique experience. Become an artist."
+        },
+        "high": {
+            "cost": 9,
+            "roomNumber": 3,
+            "image": "./images/highRoom.jpg",
+            "description": "A room without limits. Wander the coast of Nemo Island from the comfort of your own room. The sky is the limit. A room fit for a true artist."
+        }
+    },
+    "stars": 5,
+    "extras": {
+        "poetryWaking": { "name": "Poetry Waking", "cost": 3 },
+        "poem": { "name": "Poem", "cost": 10 },
+        "musicVideo": { "name": "The Hotel Song Music Video", "cost": 5 }
+    }
+}

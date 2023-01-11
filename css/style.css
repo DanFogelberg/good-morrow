@@ -1,5 +1,9 @@
+body {
+    background-color: lightgrey;
+}
+
 .offer {
-    background-color: darkgoldenrod;
+    /* background-color: darkgoldenrod; */
     color: black;
     margin-top: 0px;
     margin-bottom: 0px;
@@ -10,7 +14,7 @@
 }
 
 .room-title {
-    background-color: darkgoldenrod;
+    /* background-color: darkgoldenrod; */
     color: black;
     margin-top: 0px;
     margin-bottom: 0px;
@@ -38,7 +42,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: darkgoldenrod;
+    /* background-color: darkgoldenrod; */
 }
 
 .calendarSelect h3 {
@@ -53,11 +57,12 @@ body {
     border-radius: 7px;
 }
 .calendarSelect h3:hover {
-    background-color: yellowgreen;
+    background-color: orange;
 }
 
 .calendarSelect .selected {
     background-color: brown;
+    color: orange;
 }
 
 .calendarSelect .selected:hover {
@@ -79,6 +84,12 @@ img {
     display: flex;
     background-color: darkgoldenrod;
     align-items: center;
+    border-color: black;
+    border-top: 2px;
+    border-bottom: 2px;
+    border-left: 0px;
+    border-right: 0px;
+    border-style: solid;
 }
 
 @media screen and (max-width: 600px) {
@@ -89,4 +100,8 @@ img {
     .image-container {
         width: 100%;
     }
+}
+
+.red {
+    color: red;
 }

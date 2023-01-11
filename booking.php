@@ -9,6 +9,10 @@ require "vendor/autoload.php";
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
+use Dotenv\Dotenv;
+//ENV SETUP
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 header('Content-Type: application/json');
 $response = [];
@@ -69,6 +73,7 @@ if (isset($response["error"])) {
 $info = ["message" => "Very good. Enjoy your stay. But not too much, you might never leave."];
 foreach ($bookedExtras as $extra) {
     if ($extra["name"] === "Poem") $info["poem"] = getPoem();
+    if ($extra["name"] === "The Hotel Song Music Video") $info["musicVideo"] = "This is your secret link to the amazing music video: " . $_ENV["MUSIC_VIDEO"];
 }
 $bookingResponse = [
     "island" => "Point Nemo",
