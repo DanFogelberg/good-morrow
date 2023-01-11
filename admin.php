@@ -64,7 +64,7 @@ if ($loggedIn === true) {
         $rooms = $updatedRooms;
         $hotelData = ["rooms" => $updatedRooms, "stars" => $stars, "extras" => $extras];
 
-        file_put_contents("./code/hotelVariables.txt", json_encode($hotelData));
+        file_put_contents("./code/hotelVariables.json", json_encode($hotelData));
     }
 }
 
