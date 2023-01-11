@@ -12,7 +12,6 @@ use GuzzleHttp\Exception\ClientException;
 
 header('Content-Type: application/json');
 $response = [];
-
 $db = connect("hotels.db");
 
 //Check Post
@@ -69,7 +68,7 @@ if (isset($response["error"])) {
 //Return confirmation
 $info = ["message" => "Very good. Enjoy your stay. But not too much, you might never leave."];
 foreach ($bookedExtras as $extra) {
-    if ($extra["name"] === "Poem") $info["poem"] = "En dikt!";
+    if ($extra["name"] === "Poem") $info["poem"] = getPoem();
 }
 $bookingResponse = [
     "island" => "Point Nemo",

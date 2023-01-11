@@ -154,23 +154,24 @@ function insertBooking(string $arrival, string $departure, string $room, array $
 
 function transferMoney(string $transferCode): string | bool
 {
-    $client = new GuzzleHttp\Client();
-    $options = [
-        'form_params' => [
-            "user" => "Dan",
-            "transferCode" => $transferCode
-        ]
-    ];
+    // $client = new GuzzleHttp\Client();
+    // $options = [
+    //     'form_params' => [
+    //         "user" => "Dan",
+    //         "transferCode" => $transferCode
+    //     ]
+    // ];
 
-    try {
-        $result = $client->post("https://www.yrgopelago.se/centralbank/deposit", $options);
-        $result = $result->getBody()->getContents();
-        $result = json_decode($result, true);
-        return true;
-    } catch (\Exception $e) {
-        //Perhaps the best solution here would be to automatically remove the booking from the hotel?
-        return "Booking successful but there was an error with the money transfer. Please contact the hotel to resolve this manually. Error:" . $e;
-    }
+    // try {
+    //     $result = $client->post("https://www.yrgopelago.se/centralbank/deposit", $options);
+    //     $result = $result->getBody()->getContents();
+    //     $result = json_decode($result, true);
+    //     return true;
+    // } catch (\Exception $e) {
+    //     //Perhaps the best solution here would be to automatically remove the booking from the hotel?
+    //     return "Booking successful but there was an error with the money transfer. Please contact the hotel to resolve this manually. Error:" . $e;
+    // }
+    return true;
 }
 
 
@@ -188,4 +189,17 @@ function bookingLog(string $booking)
     date_default_timezone_set("Europe/Stockholm");
     file_put_contents(__DIR__ . "/../log/bookingLog.txt", "New booking at: " . " " . date("Y-m-d H:i:s") . "\n", FILE_APPEND);
     file_put_contents(__DIR__ . "/../log/bookingLog.txt", $booking . "\n", FILE_APPEND); //Not perfect format, but this is mostly just for fun
+}
+
+
+//Other //////////////////////////////////////////////////////////////////////////////////
+
+
+function getPoem(): string
+{
+    return "Jag föddes sent på jorden
+    Vilken fantastisk tur
+    Jag lever nu
+    Men ändå mest
+    I det förgångna";
 }
