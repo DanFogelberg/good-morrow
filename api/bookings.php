@@ -25,7 +25,7 @@ if (!isset($_POST["arrival"], $_POST["departure"], $_POST["room"], $_POST["trans
                 "departure" => "string: YYYY-MM-DD",
                 "room" => "string: 'basic'/'average'/'high'",
                 "transferCode" => "string: uuid",
-                "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking (More to come)"
+                "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking, poem and musicVideo"
             ],
             "response" => "Array with message or error"
         ],
@@ -36,7 +36,7 @@ if (!isset($_POST["arrival"], $_POST["departure"], $_POST["room"], $_POST["trans
                 "arrival" => "string: YYYY-MM-DD",
                 "departure" => "string: YYYY-MM-DD",
                 "room" => "string: 'basic'/'average'/'high'",
-                "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking (More to come)"
+                "extras" => "Optional. array:[string: extra, string: extra ...] Available extras: poetryWaking, poem and musicVideo"
             ],
             "response" =>  "Array with contents depending on parameters sent: bookings returns all bookings. room + arrival + departure returns available = true/false and cost: int|float. extras can be added to this."
         ]
@@ -135,9 +135,13 @@ if (isset($response["error"])) {
     die();
 }
 
+
+//The following code is a copy of booking.php and should perhaps be made into a function
+//Return confirmation
 $info = ["message" => "Very good. Enjoy your stay. But not too much, you might never leave."];
 foreach ($bookedExtras as $extra) {
     if ($extra["name"] === "Poem") $info["poem"] = getPoem();
+    if ($extra["name"] === "The Hotel Song Music Video") $info["musicVideo"] = "This is your secret link to the amazing music video: " . $_ENV["MUSIC_VIDEO"];
 }
 $bookingResponse = [
     "island" => "Point Nemo",
