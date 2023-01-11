@@ -50,7 +50,7 @@ if ($loggedIn === true) {
     $costUpdated = false;
     $updatedRooms = [];
     foreach ($rooms as $roomType => $room) {
-        if (isset($_POST[$roomType . "NewCost"])) {
+        if (isset($_POST[$roomType . "NewCost"])) { //roomTypeNewCost
             $newCost = intval($_POST[$roomType . "NewCost"]); //Values from html are always string. This also sanitizes
 
             if ($room["cost"] != $newCost) {
@@ -70,8 +70,6 @@ if ($loggedIn === true) {
 
 //Get bookings from DB
 if ($loggedIn === true) {
-
-
     $statement = $db->prepare("SELECT * FROM bookings");
     $statement->execute();
     $bookings = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -109,7 +107,7 @@ if ($loggedIn === true) {
 
             foreach ($bookings as $booking) : $i++; ?>
                 <label for="booking">Booking From: <?= $booking["arrival_date"] ?> Until: <?= $booking["departure_date"] ?> In room: <?= $booking["room_number"] ?></label>
-                <input type="checkbox" name="<?= $booking['id'] ?>" value="delete">
+                <input type="checkbox" name="<?= $booking['id'] ?>" value="delete"> <!-- If checked: $POST[$booking['id']] = "delete"] -->
                 <br>
 
 
@@ -119,9 +117,9 @@ if ($loggedIn === true) {
             <?php endif ?>
         </form>
         <form method="post" action="">
-            <?php foreach ($rooms as $roomType => $room) : ?>
+            <?php foreach ($rooms as $roomType => $room) : ?> <!-- $roomType = basic/average/high -->
                 <?= $roomType ?> Current cost: <?= $room["cost"] ?>
-                <input type="number" name="<?= $roomType ?>NewCost" value=<?= $room["cost"] ?>>
+                <input type="number" name="<?= $roomType ?>NewCost" value=<?= $room["cost"] ?>> <!--$POST[$roomType . "NewCost"] = new cost-->
 
                 <br>
 
