@@ -170,10 +170,3 @@ function transferMoney($transferCode): string | bool
         return "Booking successful but there was an error with the money transfer. Please contact the hotel to resolve this manually. Error:" . $e;
     }
 }
-
-
-//Response////////////////////////////////////////////////////////////////////////
-
-function createBookingResponse()
-{
-}

@@ -1,8 +1,8 @@
 <?php
 
 declare(strict_types=1);
-require "scripts/hotelFunctions.php";
-require "hotelVariables.php";
+require "code/hotelFunctions.php";
+require "code/hotelVariables.php";
 require "vendor/autoload.php";
 
 use benhall14\phpCalendar\Calendar as Calendar;
@@ -154,11 +154,9 @@ foreach ($bookings as $booking) {
         //Sending data for use in javascript
         const roomTypes = <?php echo json_encode($roomTypes); ?>;
     </script>
-    <script src="scripts/functions.js">
-
-
+    <script src="code/functions.js">
     </script>
-    <script src="scripts/script.js"></script>
+    <script src="code/script.js"></script>
 </body>
 
 </html>

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-require "hotelFunctions.php";
-require "hotelVariables.php";
+require "code/hotelFunctions.php";
+require "code/hotelVariables.php";
 require "vendor/autoload.php";
 
 use Dotenv\Dotenv;

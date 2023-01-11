@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-require "scripts/hotelFunctions.php";
-require "scripts/bookingFunctions.php";
-require "hotelVariables.php"; //Room costs
+require "code/hotelFunctions.php";
+require "code/bookingFunctions.php";
+require "code/hotelVariables.php"; //Room costs
 require "vendor/autoload.php";
 
 use GuzzleHttp\Client;
@@ -64,14 +64,11 @@ if (isset($response["error"])) {
     die();
 }
 
-//RETURN CONFIRMATION
-
+//Return confirmation
 $info = ["message" => "Very good. Enjoy your stay. But not too much, you might never leave."];
 foreach ($bookedExtras as $extra) {
     if ($extra["name"] === "Poem") $info["poem"] = "En dikt!";
 }
-
-
 $bookingResponse = [
     "island" => "Point Nemo",
     "hotel" => "The Good Morrow",
