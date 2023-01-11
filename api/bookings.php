@@ -14,14 +14,17 @@ header("Content-Type:application/json");
 $response = [];
 $db = connect("./hotels.db");
 
+//First check and handle GET requests
 
+//Gets bookings from DB
 if (isset($_GET["bookings"])) {
-    //Get bookings from DB
+
     $statement = $db->prepare("SELECT * FROM bookings");
     $statement->execute();
     $bookings = $statement->fetchAll(PDO::FETCH_ASSOC);
     $response["bookings"] = $bookings;
 }
+//Checks if room is availble and returns cost
 if (isset($_GET["arrival"], $_GET["departure"], $_GET["room"])) {
     $bookedExtras = [];
     if (isset($_GET["extras"]) && is_array($_GET["extras"])) {
@@ -44,14 +47,14 @@ if (isset($_GET["arrival"], $_GET["departure"], $_GET["room"])) {
     $response["cost"] = totalCost($arrival, $departure, $rooms[$room]["cost"], $bookedExtras);
 }
 
-//Send back response from
+//Send back response from GET request, if any
 if (!empty($response)) {
     echo json_encode($response);
     die();
 }
 
 
-//Check Post
+//Check Post. If none return instructions
 if (!isset($_POST["arrival"], $_POST["departure"], $_POST["room"], $_POST["transferCode"])) {
     $response = [
         "usage" =>  "Make a POST request or GET Request",
@@ -137,7 +140,7 @@ $bookingResponse = [
     "hotel" => "The Good Morrow",
     "arrival_date" => $arrival,
     "departure_date" => $departure,
-    "total_cost" => $totalCost,
+    "total_cost" => $totalCost . "$",
     "stars" => $stars,
     "features" => $bookedExtras,
     "additional_info" => $info

@@ -118,7 +118,7 @@ if ($loggedIn === true) {
         </form>
         <form method="post" action="">
             <?php foreach ($rooms as $roomType => $room) : ?> <!-- $roomType = basic/average/high -->
-                <?= $roomType ?> Current cost: <?= $room["cost"] ?>
+                <?= $roomType ?> Current cost: <?= $room["cost"] ?>$
                 <input type="number" name="<?= $roomType ?>NewCost" value=<?= $room["cost"] ?>> <!--$POST[$roomType . "NewCost"] = new cost-->
 
                 <br>

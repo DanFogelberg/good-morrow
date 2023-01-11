@@ -79,9 +79,9 @@ foreach ($bookings as $booking) {
     <?php require "./header.php"; ?>
     <h2 class="offer"> Right now you get 20% off if you book a whole week or more!</h2>
     <div class="calendarSelect">
-        <h3 data-calendarnumber="0">Basic: <?= $roomTypes["basic"]["cost"] ?></h3>
-        <h3 data-calendarnumber="1">Average: <?= $roomTypes["average"]["cost"] ?></h3>
-        <h3 data-calendarnumber="2">High: <?= $roomTypes["high"]["cost"] ?></h3>
+        <h3 data-calendarnumber="0">Basic: <?= $roomTypes["basic"]["cost"] ?>$</h3>
+        <h3 data-calendarnumber="1">Average: <?= $roomTypes["average"]["cost"] ?>$</h3>
+        <h3 data-calendarnumber="2">High: <?= $roomTypes["high"]["cost"] ?>$</h3>
     </div>
 
 
@@ -120,9 +120,9 @@ foreach ($bookings as $booking) {
         <div class="booking-row">
             <label for="room">Room Standard:</label>
             <select name="room">
-                <option value="basic" data-calendarnumber="0">Basic (Cost:<?= $roomTypes["basic"]["cost"] ?>)</option>
-                <option value="average" data-calendarnumber="1">Average (Cost:<?= $roomTypes["average"]["cost"] ?>)</option>
-                <option value="high" data-calendarnumber="2">High (Cost:<?= $roomTypes["high"]["cost"] ?>)</option>
+                <option value="basic" data-calendarnumber="0">Basic (Cost:<?= $roomTypes["basic"]["cost"] ?>$)</option>
+                <option value="average" data-calendarnumber="1">Average (Cost:<?= $roomTypes["average"]["cost"] ?>$)</option>
+                <option value="high" data-calendarnumber="2">High (Cost:<?= $roomTypes["high"]["cost"] ?>$)</option>
             </select>
         </div>
         <div class="booking-row">
@@ -134,10 +134,10 @@ foreach ($bookings as $booking) {
         <div class="booking-row">
             Extras:
             <input type="checkbox" class="extra" name="poetryWaking" value=<?= $extras["poetryWaking"]["cost"] ?>>
-            <label for="poetryWaking"> Waking by poetry reading (Cost: <?= $extras["poetryWaking"]["cost"] ?>) </label><br>
+            <label for="poetryWaking"> Waking by poetry reading (Cost: <?= $extras["poetryWaking"]["cost"] ?>$) </label><br>
 
             <input type="checkbox" class="extra" name="poem" value=<?= $extras["poem"]["cost"] ?>>
-            <label for="poem"> Poem with your booking (Cost: <?= $extras["poem"]["cost"] ?>) </label><br>
+            <label for="poem"> Poem with your booking (Cost: <?= $extras["poem"]["cost"] ?>$) </label><br>
 
 
 
