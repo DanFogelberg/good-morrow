@@ -10,4 +10,4 @@ $extras = $data["extras"];
 
 
 
-$discounts = ["fullWeek" => true]; //True means discount is active and available. Should be moved into hotelVariables.txt in the future so admin can edit.
+$discounts = ["fullWeek" => true]; //True means discount is active and available. Should be moved into hotelVariables.txt so admin can edit.

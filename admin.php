@@ -36,9 +36,9 @@ if ($loggedIn === true) {
     $db = connect("hotels.db");
     $removedBookings = [];
     foreach ($_POST as $id => $delete) {
-        if ($delete === "delete") $removedBookings[] = $id;
+        if ($delete === "delete") $removedBookings[] = $id; //Adds bookings selected with checkboxes to array for deletion
     }
-    foreach ($removedBookings as $booking) {
+    foreach ($removedBookings as $booking) { //Could be made into one statement for efficiency
         $statement = $db->prepare("DELETE FROM bookings WHERE id = :id");
         $statement->bindParam(':id', $booking);
         $result = $statement->execute();
@@ -51,12 +51,11 @@ if ($loggedIn === true) {
     $updatedRooms = [];
     foreach ($rooms as $roomType => $room) {
         if (isset($_POST[$roomType . "NewCost"])) {
-            $newCost = $_POST[$roomType . "NewCost"];
+            $newCost = intval($_POST[$roomType . "NewCost"]); //Values from html are always string. This also sanitizes
 
             if ($room["cost"] != $newCost) {
                 $room["cost"] = $newCost;
                 $costUpdated = true;
-                echo $room["cost"];
             }
             $updatedRooms[$roomType] = $room;
         }
@@ -65,7 +64,7 @@ if ($loggedIn === true) {
         $rooms = $updatedRooms;
         $hotelData = ["rooms" => $updatedRooms, "stars" => $stars, "extras" => $extras];
 
-        file_put_contents("./hotelVariables.txt", json_encode($hotelData));
+        file_put_contents("./code/hotelVariables.txt", json_encode($hotelData));
     }
 }
 

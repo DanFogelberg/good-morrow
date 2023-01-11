@@ -19,13 +19,12 @@ const updateCost = () => {
             let hasDiscount = false;
             if (bookingDays >= 7) {
                 totalCost *= 0.8;
-                totalCost = totalCost.toFixed(2);
+                totalCost = totalCost.toFixed(2); //Compensating for Javascript float inaccuraccy
                 hasDiscount = true;
             }
             costViewer.textContent = `Total Cost: ${totalCost}`;
             if (hasDiscount === true)
-                //costViewer.textContent += ' Discount active! 20% off!';
-                console.log(totalCost);
+                costViewer.textContent += ' (20% Discount!)';
         }
     }
 };
