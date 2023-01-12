@@ -4,6 +4,7 @@
     width: 100%;
     font-family: 'Oxygen';
     table-layout: fixed;
+    border-bottom: 4px solid darkorange;
 }
 
 .calendar.purple {

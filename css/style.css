@@ -18,8 +18,7 @@ body {
     color: black;
     margin-top: 0px;
     margin-bottom: 0px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 8%;
     align-self: center;
     height: 100%;
 
@@ -82,17 +81,18 @@ img {
 
 .calendarContainer > div {
     display: flex;
-    background-color: darkgoldenrod;
+    background-color: brown;
     align-items: center;
-    border-color: black;
-    border-top: 2px;
-    border-bottom: 2px;
+
+    border-top: 4px;
+    border-bottom: 4px;
     border-left: 0px;
     border-right: 0px;
     border-style: solid;
+    border-color: darkorange;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 980px) {
     .calendarContainer > div {
         flex-direction: column;
     }

@@ -3,3 +3,4 @@ vendor
 .env
 test
 .DS_Store
+logmaster.php

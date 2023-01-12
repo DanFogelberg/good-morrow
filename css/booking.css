@@ -19,5 +19,17 @@ input {
 }
 
 button {
+    background-color: darkorange;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 1%;
+    padding-bottom: 1%;
     margin-right: 10px;
+    border-radius: 7px;
+    border-style: hidden;
+    font-size: 1.17em;
+}
+
+button:hover {
+    background-color: orange;
 }
