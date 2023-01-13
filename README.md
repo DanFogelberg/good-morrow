@@ -1,5 +1,3 @@
-I am not in the mood to set the mode with GIFs. Thank you very much.
-
 # The Good Morrow
 This is an island hotel like no other. Here you can become one with the island and prove John Donne wrong. The perfect site for the perfect hotel in fact. You can book rooms and order extras like poems and a music video.
 
