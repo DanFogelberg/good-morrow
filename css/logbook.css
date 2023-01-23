@@ -1,0 +1,30 @@
+.logbook-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 20rem);
+    gap: 4rem;
+    justify-content: center;
+    align-items: start;
+    list-style: none;
+}
+
+.logbook-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: brown;
+    padding: 1rem;
+}
+.logbook-item-total-cost {
+    align-self: center;
+}
+.logbook-item .features {
+    list-style: none;
+}
+
+.facts {
+    width: 20rem;
+    min-height: 5rem;
+    padding: 1rem;
+    background-color: brown;
+    margin: 2rem;
+}
